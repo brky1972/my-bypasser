@@ -5,20 +5,27 @@ const app = express();
 
 app.use(cors());
 
-// The main bypass route
+// --- ADD THIS HANDLER BELOW ---
+app.get('/', (req, res) => {
+    res.send(`
+        <body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
+            <h1>brky1972 Bypass API</h1>
+            <p>Status: <span style="color: green;">Online</span></p>
+            <p>Usage: <code>/api/bypass?url=YOUR_LINK</code></p>
+        </body>
+    `);
+});
+// ------------------------------
+
 app.get('/api/bypass', async (req, res) => {
     const target = req.query.url;
     if (!target) return res.status(400).send("No URL provided");
-
     try {
-        // We use a professional solver API as the engine
         const response = await axios.get(`https://api.bypass.city/bypass?url=${encodeURIComponent(target)}`);
-        
         if (response.data && response.data.destination) {
-            // This sends you straight to the final link
             res.redirect(response.data.destination);
         } else {
-            res.status(500).send("Bypass failed - link not found.");
+            res.status(500).send("Bypass failed.");
         }
     } catch (err) {
         res.status(500).send("Error: " + err.message);
