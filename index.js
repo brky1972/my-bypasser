@@ -5,17 +5,15 @@ const app = express();
 
 app.use(cors());
 
-// --- ADD THIS HANDLER BELOW ---
 app.get('/', (req, res) => {
     res.send(`
         <body style="font-family: sans-serif; text-align: center; padding-top: 50px;">
-            <h1>brky1972 Bypass API</h1>
+            <h1>Bypass API</h1>
             <p>Status: <span style="color: green;">Online</span></p>
             <p>Usage: <code>/api/bypass?url=YOUR_LINK</code></p>
         </body>
     `);
 });
-// ------------------------------
 
 app.get('/api/bypass', async (req, res) => {
     const target = req.query.url;
